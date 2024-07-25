@@ -3,7 +3,6 @@ from matplotlib import pyplot as plt
 import japanize_matplotlib
 from encode_csv import encode
 
-
 encode()
 data = pd.read_csv("report.csv", encoding="utf-8")
 
@@ -35,30 +34,23 @@ for i in range(1, len(list(day_data.values()))):
 y_a = [day_data[day][0] for day in x]  # 正解数
 y_b = [day_data[day][1] for day in x]  # 間違い数
 
-# 棒グラフの設定
-bar_width = 0.35
-r1 = range(len(x))
-r2 = [i + bar_width for i in r1]
-
 # グラフの描画
-fig, ax = plt.subplots(figsize=(10, 5))
+plt.figure(figsize=(len(x), y[-1]//50))   # 描画サイズ
 
 # 折れ線グラフの描画
-ax.plot(x, y, label="all", marker='o', color='blue')
-ax.plot(x, y_1, label="True", marker='o', color='green')
-ax.plot(x, y_2, label="False", marker='o', color='red')
+plt.plot(x, y, label="all", marker='o', color='blue')
+plt.plot(x, y_1, label="True", marker='o', color='green')
+plt.plot(x, y_2, label="False", marker='o', color='red')
 
 # 棒グラフの描画
-ax.bar(r1, y_a, color='green', width=bar_width, edgecolor='grey', label='True')
-ax.bar(r2, y_b, color='red', width=bar_width, edgecolor='grey', label='False')
+plt.bar(x, y_a, color='green', width=-0.35, edgecolor='grey', align='edge', label='True')
+plt.bar(x, y_b, color='red', width=0.35, edgecolor='grey', align='edge', label='False')
 
 # ラベルと凡例の設定
-ax.set_xlabel('学習日', fontsize=12)
-ax.set_ylabel('数', fontsize=12)
-ax.set_title('学習日ごとの正解と間違いの数', fontsize=14)
-ax.set_xticks([r + bar_width / 2 for r in range(len(x))])
-ax.set_xticklabels(x, rotation=45)
-ax.legend()
+plt.xlabel('学習日', fontsize=12)
+plt.ylabel('数', fontsize=12)
+plt.title('学習日ごとの正解と間違いの数', fontsize=14)
+plt.legend()
 
 # グラフの表示
 plt.tight_layout()
